@@ -1,7 +1,7 @@
 package Algorithm;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Qusetion:
@@ -13,17 +13,40 @@ import java.util.Arrays;
  * 这种题一般都先从穷举法入手, 再去想优化的方法.
  */
 public class P1_TwoSum {
+
+    public static void main(String[] args) {
+        int[] nums = {2, 7, 11, 15};
+        int[] results = new P1_TwoSum().twoSum_hashTable(nums, 9);
+        System.out.println(results[0]);
+        System.out.println(results[1]);
+    }
+
     /**
      * Method 1: Brute Force
+     * 时间复杂度: O(n^2)
+     * 空间复杂度: O(1)
+     * 时间复杂度高
      */
+    public int[] twoSum_bruteForce(int[] nums, int target) {
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    result[0] = i;
+                    result[1] = j;
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      * Method 2: 排序双指针法
      * 时间复杂度: O(n)
      * 空间复杂度: O(n)
-     * 代码可维护性: 差
+     * 代码可维护性差
      */
-    public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum_sortDoublePointer(int[] nums, int target) {
         int[] copiedArray = Arrays.copyOf(nums, nums.length);
         Arrays.sort(copiedArray);
         int i = 0, j = nums.length - 1;
@@ -54,10 +77,20 @@ public class P1_TwoSum {
     }
 
     /**
-     * Method 3: Two-pass Hash Table
+     * Method 3: Hash Table
+     * 时间复杂度: O(n)
+     * 空间复杂度: O(n)
+     * 推荐使用
      */
-
-    /**
-     * Method 4: One-pass Hash Table
-     */
+    public int[] twoSum_hashTable(int[] nums, int target) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (hashMap.containsKey(target - nums[i])) {
+                return new int[]{hashMap.get(target - nums[i]), i};
+            } else {
+                hashMap.put(nums[i], i);
+            }
+        }
+        return new int[0];
+    }
 }
