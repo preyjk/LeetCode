@@ -81,6 +81,41 @@ public class P4_FindMedianSortedArrays {
         }
     }
 
+    public double findMedianSortedArrays_kai(int[] nums1, int[] nums2) {
+        int m = nums1.length, n = nums2.length;
+        if ((m + n) % 2 == 1) {
+            return getKthElement_kai(nums1, nums2, (m + n) / 2 + 1);
+        } else {
+            return (getKthElement_kai(nums1, nums2, (m + n) / 2) + getKthElement_kai(nums1, nums2, (m + n) / 2 + 1)) / 2.0;
+        }
+    }
+
+    public int getKthElement_kai(int[] nums1, int[] nums2, int k) {
+        int p1 = 0, p2 = 0;
+
+        while (true) {
+            // bound
+            if (p1 == nums1.length) {
+                return nums2[p2 + k - 1];
+            } else if (p2 == nums2.length) {
+                return nums1[p1 + k - 1];
+            } else if (k == 1) {
+                return Math.min(nums1[p1], nums2[p2]);
+            }
+
+            int p1_new = k / 2 <= (nums1.length - p1) ? (k / 2 - 1 + p1) : (nums1.length - 1);
+            int p2_new = k / 2 <= (nums2.length - p2) ? (k / 2 - 1 + p2) : (nums2.length - 1);
+            if (nums1[p1_new] < nums2[p2_new]) {
+                k -= p1_new - p1 + 1;
+                p1 = p1_new + 1;
+
+            } else {
+                k -= p2_new - p2 + 1;
+                p2 = p2_new + 1;
+            }
+        }
+    }
+
     /**
      * Method 4: 划分数组法，进一步提高时间复杂度. 对较短数组可进行 m+1 种划分 ...
      * 时间复杂度: O(log min(m,n))
