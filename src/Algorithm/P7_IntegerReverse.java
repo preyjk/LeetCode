@@ -11,7 +11,6 @@ public class P7_IntegerReverse {
     }
 
     /**
-     * 1
      * 由于32位整数的范围在 [-2^31, 2^31-1], 因此要对翻转的数越界的情况进行边界处理
      */
     public int reverse(int x) {
