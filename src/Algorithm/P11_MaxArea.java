@@ -37,6 +37,9 @@ public class P11_MaxArea {
         return max;
     }
 
+    /**
+     *  灵活利用三元运算符，Math函数，数组索引自增运算符可以有效增加代码的可理解性。
+     */
     public int maxArea_improveMaintainability(int[] height) {
         int left = 0, right = height.length - 1;
         int max = 0;
