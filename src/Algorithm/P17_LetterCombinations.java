@@ -17,7 +17,7 @@ public class P17_LetterCombinations {
     }
 
     /**
-     * Method 1:
+     * Method 1:递归法 / 回溯法
      * 时间复杂度:
      * 空间复杂度:
      */
@@ -42,4 +42,10 @@ public class P17_LetterCombinations {
             }
         }
     }
+
+    /**
+     * Method 2: 队列法
+     * 时间复杂度:
+     * 空间复杂度:
+     */
 }
