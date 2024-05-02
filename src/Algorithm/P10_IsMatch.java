@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
  *
  * <p>
  * Solution:
- * ".*" "X*" ".X"
  */
 public class P10_IsMatch {
     public static void main(String[] args) {
@@ -30,11 +29,55 @@ public class P10_IsMatch {
     }
 
     /**
-     * Method 1:
+     * Method 1: 双指针法，逐步判断
      * 时间复杂度:
      * 空间复杂度:
      */
     public boolean isMatch_1(String s, String p) {
+        return false;
+    }
+
+    /**
+     * Method 2: 动态规划 (from leetcode 官方解答)
+     * 时间复杂度:
+     * 空间复杂度:
+     */
+    class OfficialSolution {
+        public boolean isMatch(String s, String p) {
+            int m = s.length();
+            int n = p.length();
+
+            boolean[][] f = new boolean[m + 1][n + 1];
+            f[0][0] = true;
+            for (int i = 0; i <= m; ++i) {
+                for (int j = 1; j <= n; ++j) {
+                    if (p.charAt(j - 1) == '*') {
+                        f[i][j] = f[i][j - 2];
+                        if (matches(s, p, i, j - 1)) {
+                            f[i][j] = f[i][j] || f[i - 1][j];
+                        }
+                    } else {
+                        if (matches(s, p, i, j)) {
+                            f[i][j] = f[i - 1][j - 1];
+                        }
+                    }
+                }
+            }
+            return f[m][n];
+        }
+
+        public boolean matches(String s, String p, int i, int j) {
+            if (i == 0) {
+                return false;
+            }
+            if (p.charAt(j - 1) == '.') {
+                return true;
+            }
+            return s.charAt(i - 1) == p.charAt(j - 1);
+        }
+    }
+
+    public boolean isMatch_2(String s, String p) {
         return false;
     }
 }
